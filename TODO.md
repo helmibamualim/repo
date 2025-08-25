@@ -1,67 +1,35 @@
-# TODO - Perbaikan Masalah Login
+# TODO: Konversi Database PostgreSQL ke MySQL
 
-## Status: SELESAI ✅
+## Progress Perbaikan Database Upload Error
 
-### Masalah yang Ditemukan:
-- [x] Frontend mencoba mengakses `/api/auth/verify-token` yang tidak ada di backend
-- [x] User dengan email `newuser@example.com` sudah terdaftar
-- [x] Error handling tidak spesifik
-- [x] Backend memerlukan konfigurasi database dan environment
+### ✅ Completed
+- [x] Analisis masalah database upload error
+- [x] Identifikasi perbedaan syntax PostgreSQL vs MySQL
+- [x] Buat rencana konversi komprehensif
+- [x] Buat file schema-mysql.sql yang kompatibel
+- [x] Konversi semua tipe data PostgreSQL ke MySQL
+- [x] Perbaiki syntax INDEX dan CONSTRAINTS
+- [x] Konversi triggers dan functions
+- [x] Buat panduan migrasi (migration-guide.md)
 
-### Langkah Perbaikan yang Telah Dilakukan:
+### 📋 Next Steps
+- [ ] Test import schema-mysql.sql ke database
+- [ ] Verifikasi struktur database berhasil dibuat
+- [ ] Update dokumentasi penggunaan
+- [ ] Test koneksi backend dengan database MySQL
 
-#### 1. Backend - Tambah Endpoint verify-token
-- [x] Tambah method `verifyToken` di `auth.service.ts`
-- [x] Tambah endpoint `GET /auth/verify-token` di `auth.controller.ts`
-- [x] Konfigurasi database SQLite untuk development
+## Masalah yang Ditemukan
+1. `CREATE EXTENSION IF NOT EXISTS "uuid-ossp"` - PostgreSQL syntax
+2. Tipe data `UUID`, `JSONB`, `INET`, `BOOLEAN` tidak kompatibel
+3. Function `uuid_generate_v4()` tidak ada di MySQL
+4. Syntax INDEX dengan REFERENCES tidak didukung MySQL
+5. Triggers dan functions menggunakan syntax PostgreSQL
 
-#### 2. Frontend - Periksa Konfigurasi
-- [x] Tambah konfigurasi proxy di `next.config.js`
-- [x] Konfigurasi rewrites untuk API calls
-
-#### 3. Database & Environment
-- [x] Buat file `.env.development` dengan konfigurasi SQLite
-- [x] Modifikasi `app.module.ts` untuk mendukung SQLite
-- [x] Install dependency SQLite3
-
-#### 4. File yang Telah Dimodifikasi:
-- [x] `backend/src/auth/auth.service.ts` - Tambah method verifyToken
-- [x] `backend/src/auth/auth.controller.ts` - Tambah endpoint verify-token
-- [x] `frontend/next.config.js` - Tambah proxy configuration
-- [x] `backend/src/app.module.ts` - Konfigurasi database SQLite
-- [x] `backend/.env` - Environment variables
-
-### Cara Menjalankan Aplikasi:
-
-#### 1. Start Backend:
-```bash
-cd backend
-npm install
-npm run start:dev
-```
-
-#### 2. Start Frontend (terminal baru):
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-#### 3. Test Login:
-- Buka browser: http://localhost:3000/login
-- Email: newuser@example.com
-- Password: password123
-
-### Catatan:
-- Backend berjalan di port 3001
-- Frontend berjalan di port 3000
-- Database: SQLite (poker_dev.db) untuk development
-- User test sudah terdaftar: newuser@example.com / password123
-
-### Solusi Masalah Login:
-1. ✅ Endpoint `/api/auth/verify-token` sekarang tersedia
-2. ✅ Proxy configuration mengarahkan `/api/*` ke backend
-3. ✅ Database SQLite siap digunakan untuk development
-4. ✅ JWT authentication sudah dikonfigurasi
-5. ✅ Error handling akan memberikan pesan yang lebih spesifik
-=======
+## Solusi yang Diterapkan
+- UUID → VARCHAR(36) dengan UUID() function
+- JSONB → JSON
+- INET → VARCHAR(45)
+- BOOLEAN → TINYINT(1)
+- Hapus CREATE EXTENSION
+- Perbaiki syntax INDEX dan CONSTRAINTS
+- Konversi triggers ke MySQL syntax

@@ -35,32 +35,61 @@ import { GameAction } from './game/entities/game-action.entity';
     // Database
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DATABASE_HOST'),
-        port: configService.get('DATABASE_PORT'),
-        username: configService.get('DATABASE_USERNAME'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_NAME'),
-        entities: [
-          User,
-          ChipsWallet,
-          Referral,
-          ActivityLog,
-          IpLog,
-          Transaction,
-          DailyBonus,
-          SupportTicket,
-          SystemSetting,
-          Table,
-          TablePlayer,
-          Game,
-          GameAction,
-        ],
-        synchronize: configService.get('NODE_ENV') === 'development',
-        logging: configService.get('NODE_ENV') === 'development',
-        ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
-      }),
+      useFactory: (configService: ConfigService) => {
+        const databaseType = configService.get('DATABASE_TYPE') || 'postgres';
+        
+        if (databaseType === 'sqlite') {
+          return {
+            type: 'sqlite',
+            database: configService.get('DATABASE_NAME') || 'poker_dev.db',
+            entities: [
+              User,
+              ChipsWallet,
+              Referral,
+              ActivityLog,
+              IpLog,
+              Transaction,
+              DailyBonus,
+              SupportTicket,
+              SystemSetting,
+              Table,
+              TablePlayer,
+              Game,
+              GameAction,
+            ],
+            synchronize: configService.get('NODE_ENV') === 'development',
+            logging: configService.get('NODE_ENV') === 'development',
+          };
+        }
+        
+        // PostgreSQL configuration (default)
+        return {
+          type: 'postgres',
+          host: configService.get('DATABASE_HOST'),
+          port: configService.get('DATABASE_PORT'),
+          username: configService.get('DATABASE_USERNAME'),
+          password: configService.get('DATABASE_PASSWORD'),
+          database: configService.get('DATABASE_NAME'),
+          entities: [
+            User,
+            ChipsWallet,
+            Referral,
+            ActivityLog,
+            IpLog,
+            Transaction,
+            DailyBonus,
+            SupportTicket,
+            SystemSetting,
+            Table,
+            TablePlayer,
+            Game,
+            GameAction,
+          ],
+          synchronize: configService.get('NODE_ENV') === 'development',
+          logging: configService.get('NODE_ENV') === 'development',
+          ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
+        };
+      },
       inject: [ConfigService],
     }),
 
@@ -92,6 +121,7 @@ import { GameAction } from './game/entities/game-action.entity';
     // Feature Modules - Only include modules that are complete
     AuthModule,
     UsersModule,
+    GameModule,
   ],
   controllers: [],
   providers: [],

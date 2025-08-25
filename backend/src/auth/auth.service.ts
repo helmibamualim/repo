@@ -66,6 +66,23 @@ export class AuthService {
     return result;
   }
 
+  async verifyToken(userId: string) {
+    const user = await this.usersService.findOne(userId);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    return {
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        fullName: user.fullName,
+        avatarUrl: user.avatarUrl,
+      },
+    };
+  }
+
   async validateOAuthLogin(profile: any) {
     // Implement OAuth login logic here
     // This will be used by Google and Facebook strategies

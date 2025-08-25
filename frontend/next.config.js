@@ -42,6 +42,16 @@ const nextConfig = {
     ];
   },
 
+  // API rewrites to backend
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:3001/api/:path*',
+      },
+    ];
+  },
+
   // Redirects
   async redirects() {
     return [

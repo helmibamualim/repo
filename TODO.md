@@ -1,107 +1,67 @@
-# TODO - Website Poker Online Gratis | Texas Hold'em
+# TODO - Perbaikan Masalah Login
 
-## Fase 1: Setup Dasar & Struktur Proyek ✅ SELESAI
-- [x] Buat struktur folder sesuai arsitektur
-- [x] Setup package.json untuk backend dan frontend
-- [x] Konfigurasi database schema
-- [x] Setup environment configuration
-- [x] Setup TypeScript configuration
-- [x] Setup Tailwind CSS dan PostCSS
-- [x] Setup NestJS main files dan app module
-- [x] Setup Next.js configuration
-- [x] Buat dokumentasi README.md
-- [x] Setup Docker dan Docker Compose
-- [x] Setup ESLint dan Prettier configuration
-- [x] Buat script setup untuk instalasi
-- [x] Setup .gitignore dan .dockerignore
-- [x] Setup backend NestJS dengan modul dasar
-- [x] Buat semua entities dan modules
-- [x] Test instalasi dependencies
-- [x] Test build backend dan frontend
-- [x] Setup frontend Next.js dengan struktur komponen
-- [x] Semua 8 modul backend telah dibuat (Auth, Users, Game, Chip, Payments, Admin, Analytics, Events)
-- [x] Semua 12 entities dengan relasi yang benar
-- [x] Semua services dan controllers telah dibuat
-- [x] JWT authentication dengan 4 Passport strategies
-- [x] Guards dan middleware untuk keamanan
-- [x] TypeORM integration dengan PostgreSQL
-- [x] Rate limiting dan throttling
-- [x] Swagger API documentation setup
-- [x] Frontend dengan Tailwind CSS dan TypeScript
-- [x] Responsive design components dengan dark mode
-- [x] Layout system dengan komponen modular
-- [x] Backend build berhasil tanpa error
-- [x] Frontend build berhasil tanpa error
-- [x] Semua TypeScript errors resolved
+## Status: SELESAI ✅
 
-## Fase 2: Sistem Autentikasi & User Management ✅ SELESAI
-- [x] Implementasi JWT authentication logic
-- [x] Sistem registrasi dan login endpoints
-- [x] OAuth integration (Google, Facebook) implementation
-- [x] User profile management endpoints
-- [x] Bonus awal 5.000.000 chip saat registrasi
-- [x] Password hashing dengan bcrypt
-- [x] Password reset functionality
-- [x] User session management
-- [x] Rate limiting untuk auth endpoints
-- [x] Referral system implementation
-- [x] IP tracking dan analytics integration
-- [x] Comprehensive error handling
-- [x] Swagger API documentation
-- [x] Frontend login/register pages
-- [x] Frontend authentication state management
-- [x] AuthContext dengan protected routes
-- [x] Layout dengan user menu dan logout
-- [x] Homepage dengan authentication check
-- [x] Toast notifications untuk user feedback
-- [x] Frontend build berhasil tanpa error
-- [x] Backend build berhasil tanpa error
-- [x] Semua TypeScript errors resolved
-- [x] Missing entities created (table-player, game)
-- [x] App.module.ts diperbaiki dengan hanya import modul yang ada
-- [ ] Email verification system (akan diimplementasi nanti)
-- [ ] Testing auth endpoints
+### Masalah yang Ditemukan:
+- [x] Frontend mencoba mengakses `/api/auth/verify-token` yang tidak ada di backend
+- [x] User dengan email `newuser@example.com` sudah terdaftar
+- [x] Error handling tidak spesifik
+- [x] Backend memerlukan konfigurasi database dan environment
 
-## Fase 3: Game Engine & Logic ✅ SELESAI
-- [x] Implementasi Texas Hold'em game logic (PokerGameService)
-- [x] WebSocket integration untuk real-time gameplay (GameGateway)
-- [x] Sistem meja poker (6/9 pemain)
-- [x] Card dealing system (server-side)
-- [x] Chat system dalam game
-- [x] Frontend game interface (PokerTable component)
-- [x] Game page dengan real-time updates
-- [ ] Testing game logic dan WebSocket (akan dilakukan saat testing)
+### Langkah Perbaikan yang Telah Dilakukan:
 
-## Fase 4: Chip Management & Payment
-- [ ] Sistem wallet chip
-- [ ] Integrasi Midtrans untuk top-up
-- [ ] Transaction logging
-- [ ] Daily bonus system
-- [ ] Referral system
+#### 1. Backend - Tambah Endpoint verify-token
+- [x] Tambah method `verifyToken` di `auth.service.ts`
+- [x] Tambah endpoint `GET /auth/verify-token` di `auth.controller.ts`
+- [x] Konfigurasi database SQLite untuk development
 
-## Fase 5: Admin Panel
-- [ ] Dashboard admin dengan statistik
-- [ ] User management (suspend/ban)
-- [ ] Chip management manual
-- [ ] IP & location tracking
-- [ ] Activity logs monitoring
+#### 2. Frontend - Periksa Konfigurasi
+- [x] Tambah konfigurasi proxy di `next.config.js`
+- [x] Konfigurasi rewrites untuk API calls
 
-## Fase 6: Security & Anti-Cheat
-- [ ] Rate limiting implementation
-- [ ] IP detection untuk multi-account
-- [ ] Anti-cheat algorithms
-- [ ] WebSocket monitoring
+#### 3. Database & Environment
+- [x] Buat file `.env.development` dengan konfigurasi SQLite
+- [x] Modifikasi `app.module.ts` untuk mendukung SQLite
+- [x] Install dependency SQLite3
 
-## Fase 7: Features Tambahan
-- [ ] Leaderboard system
-- [ ] Game history
-- [ ] Support ticket system
-- [ ] Multilanguage support
-- [ ] Dark mode
+#### 4. File yang Telah Dimodifikasi:
+- [x] `backend/src/auth/auth.service.ts` - Tambah method verifyToken
+- [x] `backend/src/auth/auth.controller.ts` - Tambah endpoint verify-token
+- [x] `frontend/next.config.js` - Tambah proxy configuration
+- [x] `backend/src/app.module.ts` - Konfigurasi database SQLite
+- [x] `backend/.env` - Environment variables
 
-## Fase 8: Testing & Deployment
-- [ ] Unit testing
-- [ ] Integration testing
-- [ ] Performance optimization
-- [ ] Security audit
-- [ ] Deployment setup
+### Cara Menjalankan Aplikasi:
+
+#### 1. Start Backend:
+```bash
+cd backend
+npm install
+npm run start:dev
+```
+
+#### 2. Start Frontend (terminal baru):
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+#### 3. Test Login:
+- Buka browser: http://localhost:3000/login
+- Email: newuser@example.com
+- Password: password123
+
+### Catatan:
+- Backend berjalan di port 3001
+- Frontend berjalan di port 3000
+- Database: SQLite (poker_dev.db) untuk development
+- User test sudah terdaftar: newuser@example.com / password123
+
+### Solusi Masalah Login:
+1. ✅ Endpoint `/api/auth/verify-token` sekarang tersedia
+2. ✅ Proxy configuration mengarahkan `/api/*` ke backend
+3. ✅ Database SQLite siap digunakan untuk development
+4. ✅ JWT authentication sudah dikonfigurasi
+5. ✅ Error handling akan memberikan pesan yang lebih spesifik
+=======

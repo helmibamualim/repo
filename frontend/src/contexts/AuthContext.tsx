@@ -1,3 +1,5 @@
+const TIMEOUT = 15000; // 15 detik
+
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';

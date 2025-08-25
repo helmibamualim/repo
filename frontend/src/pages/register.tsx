@@ -60,7 +60,7 @@ export default function RegisterPage() {
     try {
       const { confirmPassword, ...registerData } = data;
       
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch('/api/auth/register-sqlite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

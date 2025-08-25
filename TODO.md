@@ -85,10 +85,4 @@ node start-frontend.js
 - **Documentation**: ✅ Complete
 - **Testing**: ✅ Tools provided
 
-### 📋 Langkah Selanjutnya (Opsional):
-- [ ] Test manual di browser (perlu user action)
-- [ ] Setup production environment
-- [ ] Migrate ke backend NestJS (jangka panjang)
-- [ ] Add email verification
-- [ ] Add rate limiting
 =======

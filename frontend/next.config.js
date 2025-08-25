@@ -6,22 +6,45 @@ const nextConfig = {
   // Environment variables
   env: {
     CUSTOM_KEY: 'poker-online-gratis',
+    JWT_SECRET: 'your-super-secret-jwt-key-change-in-production',
+    DB_HOST: 'localhost',
+    DB_PORT: '3306',
+    DB_USER: 'root',
+    DB_PASSWORD: '',
+    DB_NAME: 'poker_online'
   },
 
   // Image optimization
   images: {
     domains: [
       'localhost',
-      'lh3.googleusercontent.com', // Google profile images
-      'graph.facebook.com', // Facebook profile images
-      'platform-lookaside.fbsbx.com', // Facebook CDN
+      'lh3.googleusercontent.com',
+      'graph.facebook.com',
+      'platform-lookaside.fbsbx.com',
     ],
     formats: ['image/webp', 'image/avif'],
   },
 
-  // Headers for security
+  // Headers for security and CORS
   async headers() {
     return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+        ],
+      },
       {
         source: '/(.*)',
         headers: [
@@ -42,14 +65,9 @@ const nextConfig = {
     ];
   },
 
-  // API rewrites to backend
+  // Remove API rewrites since we're using API routes directly
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:3001/api/:path*',
-      },
-    ];
+    return [];
   },
 
   // Redirects
@@ -65,16 +83,25 @@ const nextConfig = {
 
   // Webpack configuration
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Custom webpack config if needed
+    // Handle bcrypt for client-side (shouldn't be used client-side anyway)
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+      };
+    }
     return config;
   },
 
   // Experimental features
   experimental: {
-    appDir: false, // Using pages router for now
+    appDir: false,
   },
 
-  // Output configuration for deployment
+  // Output configuration
   output: 'standalone',
   
   // Disable x-powered-by header

@@ -35,7 +35,7 @@ Memperbaiki error "Terjadi kesalahan. Silakan coba lagi." pada halaman register 
 - `test-register-api.js` - Script testing API endpoints
 - `start-frontend.js` - Script helper untuk start frontend
 - `SOLUSI-REGISTER-ERROR.md` - Dokumentasi lengkap solusi
-- `TODO.md` - Progress tracking (file ini)
+- `TODO-FINAL.md` - Progress tracking (file ini)
 - Dependencies: bcrypt, jsonwebtoken, mysql2, uuid + types
 
 ### 🚀 Cara Menggunakan Solusi:
@@ -91,4 +91,3 @@ node start-frontend.js
 - [ ] Migrate ke backend NestJS (jangka panjang)
 - [ ] Add email verification
 - [ ] Add rate limiting
-=======

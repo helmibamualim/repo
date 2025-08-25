@@ -36,7 +36,7 @@ import { GameAction } from './game/entities/game-action.entity';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        const databaseType = configService.get('DATABASE_TYPE') || 'postgres';
+        const databaseType = configService.get('DATABASE_TYPE') || 'mysql';
         
         if (databaseType === 'sqlite') {
           return {
@@ -62,14 +62,43 @@ import { GameAction } from './game/entities/game-action.entity';
           };
         }
         
-        // PostgreSQL configuration (default)
+        if (databaseType === 'postgres') {
+          return {
+            type: 'postgres',
+            host: configService.get('DATABASE_HOST'),
+            port: configService.get('DATABASE_PORT'),
+            username: configService.get('DATABASE_USERNAME'),
+            password: configService.get('DATABASE_PASSWORD'),
+            database: configService.get('DATABASE_NAME'),
+            entities: [
+              User,
+              ChipsWallet,
+              Referral,
+              ActivityLog,
+              IpLog,
+              Transaction,
+              DailyBonus,
+              SupportTicket,
+              SystemSetting,
+              Table,
+              TablePlayer,
+              Game,
+              GameAction,
+            ],
+            synchronize: configService.get('NODE_ENV') === 'development',
+            logging: configService.get('NODE_ENV') === 'development',
+            ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
+          };
+        }
+        
+        // MySQL configuration (default)
         return {
-          type: 'postgres',
-          host: configService.get('DATABASE_HOST'),
-          port: configService.get('DATABASE_PORT'),
-          username: configService.get('DATABASE_USERNAME'),
-          password: configService.get('DATABASE_PASSWORD'),
-          database: configService.get('DATABASE_NAME'),
+          type: 'mysql',
+          host: configService.get('DATABASE_HOST') || 'localhost',
+          port: parseInt(configService.get('DATABASE_PORT')) || 3306,
+          username: configService.get('DATABASE_USERNAME') || 'root',
+          password: configService.get('DATABASE_PASSWORD') || '',
+          database: configService.get('DATABASE_NAME') || 'poker_online',
           entities: [
             User,
             ChipsWallet,
@@ -85,9 +114,10 @@ import { GameAction } from './game/entities/game-action.entity';
             Game,
             GameAction,
           ],
-          synchronize: configService.get('NODE_ENV') === 'development',
+          synchronize: false, // Set false karena sudah ada schema
           logging: configService.get('NODE_ENV') === 'development',
-          ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
+          charset: 'utf8mb4',
+          timezone: '+00:00',
         };
       },
       inject: [ConfigService],

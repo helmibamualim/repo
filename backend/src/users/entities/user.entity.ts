@@ -21,7 +21,7 @@ import { SupportTicket } from '../../admin/entities/support-ticket.entity';
 @Index(['username'])
 @Index(['referralCode'])
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @Column({ type: 'varchar', length: 36, primary: true, default: () => 'UUID()' })
   id: string;
 
   @Column({ unique: true, length: 50 })

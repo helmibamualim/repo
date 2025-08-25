@@ -1,0 +1,142 @@
+Berikut ini adalah rencana detail profesional untuk website Poker Online Gratis | Texas Hold'em yang kamu rancang — mulai dari arsitektur sistem, fitur teknis, desain modular, hingga komponen bisnis & keamanan.
+
+?? 1. Visi dan Konsep Platform
+
+Nama Website: Poker Online Gratis - Texas Hold'em
+
+Platform poker online berbasis web yang memungkinkan siapa pun bermain poker Texas Hold’em secara gratis dengan chip virtual, memiliki sistem top-up, bonus harian, sistem anti-cheat, dan panel admin profesional.
+
+?? 2. Fitur Website
+?? 2.1. Fitur Pemain (User Side)
+Fitur	Detail
+Registrasi & Login	Email, Google, Facebook OAuth, CAPTCHA
+Bonus Awal	5.000.000 chip saat registrasi
+Lobby Game	Daftar meja poker: 6/9 pemain per meja, private/public
+Sistem Game	Texas Hold’em klasik, dengan dealer otomatis
+Profil Pemain	Avatar, nama pengguna, histori permainan, statistik menang/kalah
+Top-Up Chip	Sistem pembayaran terintegrasi Midtrans (QRIS, e-Wallet, dll)
+Daily Bonus	Bonus login harian progresif
+Referral System	Kode referral = bonus chip
+Leaderboard	Harian, mingguan, global
+History Game	Riwayat kartu, posisi, menang/kalah
+Chat Dalam Game	Chat publik dan emoji
+Deteksi Lokasi/IP	Deteksi pemain yang bermain di lokasi/IP sama
+Bantuan/Support	Sistem tiket bantuan pengguna
+??? 2.2. Fitur Admin Panel
+Modul	Fungsionalitas
+Dashboard Utama	Statistik pemain aktif, transaksi, jumlah meja, total chip
+Manajemen Pemain	Lihat, cari, suspend/ban user, reset password, kirim chip manual
+Tambah Chip Manual	Input user ID + jumlah chip
+IP & Lokasi Tracker	Lihat riwayat login + IP + lokasi user
+Log Aktivitas Pemain	Semua tindakan (login, beli chip, join game, menang/kalah)
+Manajemen Meja	Lihat semua meja aktif, kick pemain, delete meja
+Manajemen Chip	Daftar top-up, refund, mutasi chip per user
+Manajemen Event & Bonus	Atur bonus harian, event referral, kode voucher
+Notifikasi & Pesan Sistem	Broadcast pengumuman di lobby
+Analitik Real-Time	Jumlah chip beredar, rasio aktif user, win rate abnormal
+Integrasi Midtrans	Monitoring pembayaran dan callback webhook otomatis
+?? 3. Arsitektur Sistem
+[Client] <--> [Frontend (Next.js/React)] <--> [Backend API (Node.js/NestJS)]
+                                           <--> [Database (PostgreSQL/MySQL)]
+                                           <--> [Game Engine (WebSocket/Socket.IO)]
+                                           <--> [Admin Panel (Separate React App)]
+                                           <--> [IP Location API (ipdata.co/MaxMind)]
+                                           <--> [Payment Gateway (Midtrans Snap API)]
+
+?? 4. Struktur Modul dan Komponen
+?? Backend Structure (NestJS)
+src/
++-- auth/             (JWT Auth & Guard)
++-- users/            (User CRUD & profile)
++-- game/             (Game logic, tables, dealers)
++-- chip/             (Chip wallet, transaction logs)
++-- payments/         (Midtrans integration)
++-- admin/            (Admin-only endpoints)
++-- analytics/        (IP tracker, logs, stats)
++-- events/           (Daily bonus, promotions)
+
+?? Frontend Structure (React/Next.js)
+pages/
++-- index.tsx         (Home / Lobby)
++-- login.tsx
++-- register.tsx
++-- game/[tableId].tsx
++-- profile.tsx
++-- leaderboard.tsx
++-- buy-chips.tsx
++-- admin/            (Only for Admin Role)
+¦   +-- dashboard.tsx
+¦   +-- users.tsx
+¦   +-- tables.tsx
+¦   +-- payments.tsx
+components/
++-- TableCard.tsx
++-- ChatBox.tsx
++-- ChipCounter.tsx
++-- UserAvatar.tsx
+
+?? 5. Keamanan dan Fair Play
+Sistem	Penjelasan
+JWT Authentication	Token validasi aman di sisi klien
+Rate Limiting & CAPTCHA	Mencegah spam & abuse
+IP & Geo-Location Detection	Deteksi multi-akun dengan IP sama
+WebSocket Monitoring	Menangkal auto-play bot
+Anti-Cheat	Deteksi user yang bermain terlalu sering dengan user sama
+Server-Side Card Dealing	Agar fair & tidak bisa dimanipulasi
+?? 6. Integrasi Pembayaran dengan Midtrans
+Fitur	Keterangan
+Snap Checkout	Pengguna memilih nominal, dibayar via e-wallet/QRIS/bank
+Webhook Callback	Update otomatis jika pembayaran sukses
+Invoice History	Bisa dicek di profil pengguna dan admin panel
+Retry Payment	Untuk transaksi yang gagal
+?? 7. Fitur Tambahan yang Meningkatkan Nilai Produk
+
+? Multibahasa (Indonesia & Inggris)
+
+? Mode Malam
+
+? Notifikasi Web & Email
+
+? Progress Bar XP Pemain
+
+? Event Turnamen Tiap Minggu (opsional)
+
+?? 8. Database Table Utama (Simplifikasi)
+Table	Keterangan
+users	Data akun pengguna
+chips_wallet	Saldo chip tiap user
+games	Data game aktif/sudah selesai
+tables	Info meja & pemain
+transactions	Log top-up via Midtrans
+activity_logs	Semua aktivitas penting
+referrals	Data referral antar pemain
+ip_logs	Riwayat IP dan lokasi user
+?? Siap Launch? Ini Tahapan Pengembangan
+
+? Desain UI/UX (Figma / Sketch)
+
+? Pembuatan Database + API Backend
+
+? Pembuatan Frontend
+
+? Integrasi WebSocket Game Engine
+
+? Integrasi Pembayaran Midtrans
+
+? Deploy ke Server (VPS, CDN, SSL)
+
+? Testing (Unit, Manual, Simulasi)
+
+? Launch & Promosi
+
+?? Dokumen Tambahan yang Bisa Saya Bantu
+
+? ERD Database (Entity-Relationship Diagram)
+
+? Dokumen API Swagger (untuk developer backend/frontend)
+
+? Wireframe UI Website
+
+? Desain Admin Panel
+
+? Draft Terms & Conditions (untuk legalitas)
